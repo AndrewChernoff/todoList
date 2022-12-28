@@ -35,6 +35,10 @@ function App() {
     setTasks([newTask,...tasks])
   }
 
+  const onChangeStatus = (taskId: string, isChecked: boolean) => {
+    setTasks(tasks.map(el => el.id === taskId? {...el, isDone: isChecked} : el))
+  }
+
   const getFilteredTasksForRender = (): TaskType[] => {
     switch (filter) {
       case "All":
@@ -58,6 +62,7 @@ function App() {
         filter={filter}
         setFilter={setFilter}
         addTask={addTask}
+        onChangeStatus={onChangeStatus}
       />
     </div>
   );

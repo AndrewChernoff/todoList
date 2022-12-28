@@ -6,3 +6,25 @@
 .App > div {
   margin-right: 50px;
 }
+
+.isDone {
+  text-decoration: line-through;
+  font-weight: bold;
+}
+
+.notIsDone {
+  font-weight: bold;
+}
+
+.activeFilter {
+  color: white;
+  font-weight: bold;
+  border: hotpink 2px solid ;
+  background: hotpink;
+  border-radius: 3px;
+  outline-color: hotpink;
+}
+
+.erorInput {
+  border: hotpink 2px solid;
+}
