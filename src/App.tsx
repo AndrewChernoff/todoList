@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import AddItemForm from "./AddItemForm";
 import "./App.css";
 import TodoList from "./TodoList";
 
@@ -47,11 +48,16 @@ let [tasks, setTasks] = useState({
     setTasks({...tasks, [todoListId]: [...tasks[todoListId]].filter(el => el.id !== taskId)})
   };
 
-  const addTask = (todoListId: string,taskName: string) => {
+   const addTask = (todoListId: string,taskName: string) => {
     const newTask: TaskType = {
       id: uuidv4(), title: taskName, isDone: false
     }
     setTasks({...tasks, [todoListId]: [...tasks[todoListId], newTask]})
+  }
+
+  const updateTask = (todolistID: string, taskId: string, newTitle: string) => {
+    console.log(newTitle);
+    setTasks({...tasks, [todolistID]: [...tasks[todolistID].map(el => el.id === taskId ? {...el, title: newTitle}: el)]})
   }
 
   const onChangeStatus = (todoListId: string, taskId: string, isChecked: boolean) => {
@@ -70,8 +76,31 @@ let [tasks, setTasks] = useState({
     setTasks({...tasks})
   }
 
+  const addTodoList = (newTitle: string) => {
+    let newId = uuidv4() 
+    let newTodoList: TodolistsType = {
+      id: newId,
+      title: newTitle,
+      filter: 'All'
+    }
+
+    setTodolists([newTodoList, ...todolists])
+    setTasks({...tasks, [newId]: [{id: uuidv4(), title: 'Rest API', isDone: true},
+      {id: uuidv4(), title: 'GraphQL', isDone: false},
+      {id: uuidv4(), title: 'Rest API', isDone: true},
+      {id: uuidv4(), title: 'GraphQL', isDone: false},
+    ]})
+
+  }
+
+  const updateTodoList = (todoListId: string, newTitle: string) => {
+    setTodolists(todolists.map(el => el.id === todoListId? {...el, title: newTitle}: el))
+  }
+
+
   return (
     <div className="App">
+      <AddItemForm callBack={addTodoList}/>
      {todolists.map((el) => {
          const getFilteredTasksForRender = (): TaskType[] => {
         
@@ -87,17 +116,7 @@ let [tasks, setTasks] = useState({
             return tasks[el.id];
         }
       };  
-      //let allTodolistTasks = tasks
       
-      /* let taskForTodoList = tasks[el.id]
-
-      if(el.filter === 'Active') {
-        taskForTodoList = tasks[el.id].filter(task => !task.isDone)
-      }
-      if (el.filter === 'Completed') {
-        taskForTodoList = tasks[el.id].filter(task => task.isDone)
-      }  */
- 
       return <TodoList
       key={el.id}
       todolistId={el.id}
@@ -109,6 +128,8 @@ let [tasks, setTasks] = useState({
       addTask={addTask}
       onChangeStatus={onChangeStatus}
       deleteTodoList={deleteTodoList}
+      updateTask={updateTask}
+      updateTodoList={updateTodoList}
     />
      })} 
     </div>
