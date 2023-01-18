@@ -1,7 +1,11 @@
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import AddItemForm from "./AddItemForm";
 import "./App.css";
+import ButtonAppBar from "./ButtonAppBar";
 import TodoList from "./TodoList";
 
 export type TaskType = {
@@ -56,7 +60,6 @@ let [tasks, setTasks] = useState({
   }
 
   const updateTask = (todolistID: string, taskId: string, newTitle: string) => {
-    console.log(newTitle);
     setTasks({...tasks, [todolistID]: [...tasks[todolistID].map(el => el.id === taskId ? {...el, title: newTitle}: el)]})
   }
 
@@ -100,7 +103,13 @@ let [tasks, setTasks] = useState({
 
   return (
     <div className="App">
-      <AddItemForm callBack={addTodoList}/>
+      <ButtonAppBar />
+      <Container fixed>
+      <Grid container style={{padding: '20px'}}>
+        <AddItemForm callBack={addTodoList}/>
+      </Grid>
+
+      <Grid container spacing={3}>
      {todolists.map((el) => {
          const getFilteredTasksForRender = (): TaskType[] => {
         
@@ -117,21 +126,29 @@ let [tasks, setTasks] = useState({
         }
       };  
       
-      return <TodoList
-      key={el.id}
-      todolistId={el.id}
-      title={el.title}
-      tasks={getFilteredTasksForRender()}
-      removeTask={removeTask}
-      filter={el.filter}
-      changeFilter={changeFilter}
-      addTask={addTask}
-      onChangeStatus={onChangeStatus}
-      deleteTodoList={deleteTodoList}
-      updateTask={updateTask}
-      updateTodoList={updateTodoList}
-    />
+      return (
+        <Grid item key={el.id}>
+          <Paper style={{padding: '10px'}}> 
+          <TodoList
+            key={el.id}
+            todolistId={el.id}
+            title={el.title}
+            tasks={getFilteredTasksForRender()}
+            removeTask={removeTask}
+            filter={el.filter}
+            changeFilter={changeFilter}
+            addTask={addTask}
+            onChangeStatus={onChangeStatus}
+            deleteTodoList={deleteTodoList}
+            updateTask={updateTask}
+            updateTodoList={updateTodoList}
+          />
+          </Paper>
+        </Grid>
+      );
      })} 
+     </Grid>
+     </Container>
     </div>
   );
 }

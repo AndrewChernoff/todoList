@@ -1,4 +1,4 @@
-.App {
+/* .App {
   padding: 30px;
   display: flex;
 }
@@ -27,4 +27,8 @@
 
 .erorInput {
   border: hotpink 2px solid;
+} */
+
+.isDone {
+  opacity: 0.3;
 }

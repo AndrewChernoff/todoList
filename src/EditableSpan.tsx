@@ -3,6 +3,7 @@ import { ChangeEvent, ChangeEventHandler, useState } from "react"
 type SpanType = {
     Oldtitle: string
     callback: (newTitle: string) => void
+    className?: string
 }
 
 const EditableSpan = (props: SpanType) => {
@@ -20,7 +21,7 @@ const EditableSpan = (props: SpanType) => {
             setEdit(!edit)
             
         }} autoFocus/> 
-    : <span onDoubleClick={onDoubleClickHandler}>
+    : <span className={props.className? props.className : undefined } onDoubleClick={onDoubleClickHandler}>
     {props.Oldtitle}
     </span>}
     </>
