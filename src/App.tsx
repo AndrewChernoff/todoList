@@ -8,13 +8,17 @@ import "./App.css";
 import ButtonAppBar from "./ButtonAppBar";
 import TodoList from "./TodoList";
 
+export type TasksType = {
+  [key: string] : TaskType[]
+}
+
 export type TaskType = {
   id: string;
   title: string;
   isDone: boolean;
 };
 
-type TodolistsType = {
+export type TodolistsType = {
   id: string
   title: string
   filter: FilterValueType
@@ -35,7 +39,7 @@ function App() {
     ]
 )
 
-let [tasks, setTasks] = useState({
+let [tasks, setTasks] = useState<TasksType>({
   [todolistID1]: [
       {id: uuidv4(), title: 'HTML&CSS', isDone: true},
       {id: uuidv4(), title: 'JS', isDone: true},
