@@ -1,8 +1,17 @@
 import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer } from './taskReducer';
 import { TasksType } from "../App"
+import { v4 as uuidv4 } from 'uuid';
 
-test.skip('delete task', () => {
-    const tasks: TasksType = {
+let tasks: TasksType;
+let todolistID1: string
+let todolistID2: string
+
+beforeEach(() => {
+    todolistID1 = uuidv4()
+    todolistID2 = uuidv4()
+   
+
+    tasks = {
         'todolistID1': [
             {id: '1', title: 'HTML&CSS', isDone: true},
             {id: '2', title: 'JS', isDone: true},
@@ -13,6 +22,21 @@ test.skip('delete task', () => {
             {id: '2', title: 'GraphQL', isDone: false},
         ]
       }
+})
+
+
+test('delete task', () => {
+    /* const tasks: TasksType = {
+        'todolistID1': [
+            {id: '1', title: 'HTML&CSS', isDone: true},
+            {id: '2', title: 'JS', isDone: true},
+            {id: '3', title: 'ReactJS', isDone: false},
+        ],
+        'todolistID2': [
+            {id: '1', title: 'Rest API', isDone: true},
+            {id: '2', title: 'GraphQL', isDone: false},
+        ]
+      } */
 
       const action = removeTaskAC('todolistID1', '1')
 
@@ -30,8 +54,8 @@ test.skip('delete task', () => {
       })
       
 })
-test.skip('add task', () => {
-    const tasks: TasksType = {
+test('add task', () => {
+    /* const tasks: TasksType = {
         'todolistID1': [
             {id: '1', title: 'HTML&CSS', isDone: true},
             {id: '2', title: 'JS', isDone: true},
@@ -41,7 +65,7 @@ test.skip('add task', () => {
             {id: '1', title: 'Rest API', isDone: true},
             {id: '2', title: 'GraphQL', isDone: false},
         ]
-      }
+      } */
 
       const action = addTaskAC('todolistID2', 'Redux')
 
@@ -52,8 +76,8 @@ test.skip('add task', () => {
       
 }
 )
-test.skip('add task', () => {
-    const tasks: TasksType = {
+test('add task', () => {
+    /* const tasks: TasksType = {
         'todolistID1': [
             {id: '1', title: 'HTML&CSS', isDone: true},
             {id: '2', title: 'JS', isDone: true},
@@ -63,7 +87,7 @@ test.skip('add task', () => {
             {id: '1', title: 'Rest API', isDone: true},
             {id: '2', title: 'GraphQL', isDone: false},
         ]
-      }
+      } */
 
       const action = changeTaskStatusAC('todolistID2', '1', false)
 
@@ -74,8 +98,8 @@ test.skip('add task', () => {
       
 })
 
-test.skip('change task title', () => {
-    const tasks: TasksType = {
+test('change task title', () => {
+    /* const tasks: TasksType = {
         'todolistID1': [
             {id: '1', title: 'HTML&CSS', isDone: true},
             {id: '2', title: 'JS', isDone: true},
@@ -85,7 +109,7 @@ test.skip('change task title', () => {
             {id: '1', title: 'Rest API', isDone: true},
             {id: '2', title: 'GraphQL', isDone: false},
         ]
-      }
+      } */
 
       const action = changeTaskTitleAC('todolistID1', '3', 'Angular')
 

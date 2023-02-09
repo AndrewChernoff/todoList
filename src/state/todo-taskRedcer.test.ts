@@ -1,13 +1,14 @@
 import { TasksType, TodolistsType } from "../App"
 import { addTaskAC, taskReducer } from './taskReducer';
 import { addTodoListAC, todoListReducer } from './todoListReducer';
+import { v4 as uuidv4 } from 'uuid';
 
 test('add todo and tasks', () => {
     let todolist: TodolistsType[] = []
 
     let tasks: TasksType = {}
 
-    let action = addTodoListAC('New todo')
+    let action = addTodoListAC('New todo', uuidv4())
 
     const todolistResult = todoListReducer(todolist, action)
     const tasksResult = taskReducer(tasks, action)

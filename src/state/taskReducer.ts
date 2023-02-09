@@ -9,7 +9,7 @@ type ChangeTitleACType = ReturnType<typeof changeTaskTitleAC>
 
 type ActionType = RemoveTaskACType | AddTaskACType | ChangeStatusACType | ChangeTitleACType | AddTodoType | RemoveTodoType
 
-export const taskReducer = (state: TasksType, action: ActionType) => {
+export const taskReducer = (state: TasksType, action: ActionType): TasksType => {
   switch (action.type) {
     case "ADD_TASK":
         const newTask: TaskType = {id: uuidv4(), title: action.title, isDone: false}
@@ -20,13 +20,18 @@ export const taskReducer = (state: TasksType, action: ActionType) => {
         return {...state, [action.todoListId]: state[action.todoListId].map(el => el.id === action.taskId ? {...el, isDone: action.newStatus} : el)};
     case "CHANGE_TASK_TITLE":
         return {...state, [action.todoListId]: state[action.todoListId].map(el => el.id === action.taskId ? {...el, title: action.newTitle} : el)};
-    case "ADD_TODO": 
-        return {...state, [action.todoListId]: []}
+    case "ADD_TODO":
+          return {...state, [action.todoListId]: [
+            {id: uuidv4(), title: 'HTML&CSS', isDone: true},
+            {id: uuidv4(), title: 'JS', isDone: true},
+            {id: uuidv4(), title: 'ReactJS', isDone: false},
+        ]}
+        
     case "REMOVE_TODO": 
         //return {...state, [action.todoListId]: []}
         let stateCopy = {...state}
         delete stateCopy[action.todoListId]
-        return state
+        return stateCopy
     default:
         throw new Error("I don't inderstand this type");
   }
