@@ -8,7 +8,12 @@ type UpdateTodoListTitleType = ReturnType<typeof updateTodoListTitleAC>
 
 export type TodoListActionType = RemoveTodoType | AddTodoType | ChangeFilterType | UpdateTodoListTitleType
 
-export const todoListReducer = (state: TodolistsType[], action: TodoListActionType): TodolistsType[] => {
+let initialState: TodolistsType[] = [
+    /* {id: 'todolistID1', title: 'What to learn', filter: 'All'},
+    {id: 'todolistID2', title: 'What to buy', filter: 'All'}, */
+]
+
+export const todoListReducer = (state = initialState, action: TodoListActionType): TodolistsType[] => {
   switch (action.type) {
     case "ADD_TODO":
         const newTodo: TodolistsType = {id: action.todoListId, title: action.title, filter: 'All'}
@@ -20,7 +25,7 @@ export const todoListReducer = (state: TodolistsType[], action: TodoListActionTy
     case "UPDATE_TODOLIST_TITLE":
         return state.map(el => el.id === action.todoListId ? {...el, title: action.newTitle}: el)
     default:
-        throw new Error("I don't inderstand this type");
+        return state;
   }
 };
 

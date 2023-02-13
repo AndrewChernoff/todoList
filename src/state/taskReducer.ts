@@ -9,7 +9,20 @@ type ChangeTitleACType = ReturnType<typeof changeTaskTitleAC>
 
 type ActionType = RemoveTaskACType | AddTaskACType | ChangeStatusACType | ChangeTitleACType | AddTodoType | RemoveTodoType
 
-export const taskReducer = (state: TasksType, action: ActionType): TasksType => {
+let initialState: TasksType = {
+    /* ['todolistID1']: [
+        {id: uuidv4(), title: 'HTML&CSS', isDone: true},
+        {id: uuidv4(), title: 'JS', isDone: true},
+        {id: uuidv4(), title: 'ReactJS', isDone: false},
+  
+    ],
+    ['todolistID2']: [
+        {id: uuidv4(), title: 'Rest API', isDone: true},
+        {id: uuidv4(), title: 'GraphQL', isDone: false},
+    ] */
+  }
+
+export const taskReducer = (state = initialState, action: ActionType): TasksType => {
   switch (action.type) {
     case "ADD_TASK":
         const newTask: TaskType = {id: uuidv4(), title: action.title, isDone: false}
@@ -21,19 +34,14 @@ export const taskReducer = (state: TasksType, action: ActionType): TasksType => 
     case "CHANGE_TASK_TITLE":
         return {...state, [action.todoListId]: state[action.todoListId].map(el => el.id === action.taskId ? {...el, title: action.newTitle} : el)};
     case "ADD_TODO":
-          return {...state, [action.todoListId]: [
-            {id: uuidv4(), title: 'HTML&CSS', isDone: true},
-            {id: uuidv4(), title: 'JS', isDone: true},
-            {id: uuidv4(), title: 'ReactJS', isDone: false},
-        ]}
+          return {...state, [action.todoListId]: []}
         
     case "REMOVE_TODO": 
-        //return {...state, [action.todoListId]: []}
         let stateCopy = {...state}
         delete stateCopy[action.todoListId]
         return stateCopy
     default:
-        throw new Error("I don't inderstand this type");
+        return state;
   }
 };
 
