@@ -52,7 +52,3 @@ const AddItemForm = memo((props: PropsType) => {
 })
 
 export default AddItemForm;
-
-function useCallBack() {
-  throw new Error("Function not implemented.");
-}

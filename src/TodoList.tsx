@@ -1,5 +1,5 @@
 import Button from '@mui/material/Button';
-import { ChangeEvent, useCallback } from "react";
+import { ChangeEvent, memo, useCallback } from "react";
 import AddItemForm from "./AddItemForm";
 import { FilterValueType, TaskType } from "./App";
 import './App.css';
@@ -86,7 +86,11 @@ const TodoList = ({ title, tasks, todolistId, removeTask, changeFilter, filter, 
 
   const onDeleteTodoListHndler = () => deleteTodoList(todolistId)
 
-  const onChangeFilterHandler = (id: string, filterValue: FilterValueType) => changeFilter(id ,filterValue)
+  //const onChangeFilterHandler = useCallback((id: string, filterValue: FilterValueType) => changeFilter(id ,filterValue), [changeFilter, todolistId])
+
+  const onChangeFilterAll = useCallback(() => changeFilter(todolistId, 'All'), [changeFilter, todolistId])
+  const onChangeFilterActive = useCallback(() => changeFilter(todolistId,'Active'), [changeFilter, todolistId])
+  const onChangeFilterCompleted = useCallback(() => changeFilter(todolistId, 'Completed'), [changeFilter, todolistId])
 
   return (
     <div>
@@ -99,16 +103,38 @@ const TodoList = ({ title, tasks, todolistId, removeTask, changeFilter, filter, 
 
       <ul>{tasksItems}</ul>
       <div>
-      <Button variant={filter === 'All' ? 'contained' : undefined} onClick={() => onChangeFilterHandler(todolistId ,'All')} color='success'>
+      {/* <Button variant={filter === 'All' ? 'contained' : undefined} onClick={() => onChangeFilterHandler(todolistId ,'All')} color='success'>
         All
-      </Button>
-      <Button variant={filter === 'Active' ? 'contained' : undefined} onClick={() => onChangeFilterHandler(todolistId ,'Active')} color='error'>
+      </Button> */}
+      <ButtonWithMemo title='All' filter={filter} onClick={onChangeFilterAll} color='success'/>
+      {/* <Button variant={filter === 'Active' ? 'contained' : undefined} onClick={() => onChangeFilterHandler(todolistId ,'Active')} color='error'>
       Active
-      </Button>
+      </Button> */}
+        <ButtonWithMemo title='Active' filter={filter} onClick={onChangeFilterActive} color='error'/>
+{/* 
       <Button variant={filter === 'Completed' ? 'contained' : undefined} onClick={() => onChangeFilterHandler(todolistId ,'Completed')} color='secondary'>Completed</Button>
-      </div>
+ */}      
+         <ButtonWithMemo title='Completed' filter={filter} onClick={onChangeFilterCompleted} color='secondary'/>
+
+    </div>
     </div>
   );
 };
+
+type ButtonPropsType = {
+  title: string
+  filter: FilterValueType
+  onClick: () => void
+  color: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning"
+}
+
+
+const ButtonWithMemo = memo(({title, filter, onClick, color}: ButtonPropsType) => {
+  console.log('btn' + '' + title);
+  
+  return <Button variant={filter === title ? 'contained' : undefined} onClick={() => onClick()} color={color}>
+  {title}
+</Button>
+})
 
 export default TodoList;
