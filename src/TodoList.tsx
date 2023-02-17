@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
 import TaskItem from './TaskItem';
+import TaskItemWithRedux from './TaskItemWithRedux';
 
 type TodoListProps = {
   title: string;
@@ -51,27 +52,20 @@ const TodoList = ({ title, tasks, todolistId, removeTask, changeFilter, filter, 
   const tasksItems = filteredTasksForRender().map((t) => {
 
     const isDoneClassName = t.isDone ? 'isDone' : 'notIsDone';
-    /* const onChangeStatusHandler = useCallback((status: boolean) => onChangeStatus(todolistId,t.id, status), [onChangeStatus, todolistId])
-    const removeTaskHandler = useCallback(() => removeTask(todolistId,t.id), [removeTask,todolistId])
-    const updateTaskTitleHandler = useCallback((newTitle: string) => updateTaskHandler(t.id, newTitle), [updateTaskHandler])
- */
+   
     return (
-      /* <li key={t.id}>
-        <Checkbox size={'small'} checked={t.isDone} onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeStatus(todolistId,t.id, e.currentTarget.checked)} />
-        <EditableSpan Oldtitle={t.title} callback={(newTitle) => updateTaskHandler(t.id, newTitle)} className={isDoneClassName}/>
-
-        <IconButton aria-label="delete" onClick={() => removeTask(todolistId,t.id)}>
-        <DeleteIcon />
-      </IconButton>
-      </li> */
       
-      <TaskItem key={t.id} isChecked={t.isDone} oldtitle={t.title} 
+      <TaskItemWithRedux key={t.id} isChecked={t.isDone} oldtitle={t.title} 
+      taskId={t.id} todolistId={todolistId}
+      taskClassName={isDoneClassName}
+      />
+      /* <TaskItem key={t.id} isChecked={t.isDone} oldtitle={t.title} 
       id={t.id}
       onChangeStatus={onChangeStatusHandler}
       removeTaskHandler={removeTaskHandler}
       updateTaskTitle={updateTaskTitleHandler}
       taskClassName={isDoneClassName}
-      />
+      /> */
       
       );
   });
