@@ -15,10 +15,8 @@ type TaskItemProps = {
 }
 
 const TaskItemWithRedux = memo(({taskId, todolistId, isChecked, oldtitle, taskClassName} : TaskItemProps) => {    
-   console.log('task');
 
    const dispatch = useDispatch();
-
    
    return <li >
     <Checkbox size={'small'} checked={isChecked} onChange={(e: ChangeEvent<HTMLInputElement>) => dispatch(changeTaskStatusAC(todolistId, taskId, e.currentTarget.checked))} />

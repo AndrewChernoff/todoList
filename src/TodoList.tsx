@@ -55,17 +55,17 @@ const TodoList = ({ title, tasks, todolistId, removeTask, changeFilter, filter, 
    
     return (
       
-      <TaskItemWithRedux key={t.id} isChecked={t.isDone} oldtitle={t.title} 
+      /* <TaskItemWithRedux key={t.id} isChecked={t.isDone} oldtitle={t.title} 
       taskId={t.id} todolistId={todolistId}
       taskClassName={isDoneClassName}
-      />
-      /* <TaskItem key={t.id} isChecked={t.isDone} oldtitle={t.title} 
+      /> */
+      <TaskItem key={t.id} isChecked={t.isDone} oldtitle={t.title} 
       id={t.id}
       onChangeStatus={onChangeStatusHandler}
       removeTaskHandler={removeTaskHandler}
       updateTaskTitle={updateTaskTitleHandler}
       taskClassName={isDoneClassName}
-      /> */
+      />
       
       );
   });

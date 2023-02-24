@@ -15,9 +15,8 @@ type TaskItemProps = {
 }
 
 const TaskItem = memo(({id, isChecked, oldtitle, onChangeStatus, removeTaskHandler, taskClassName, updateTaskTitle} : TaskItemProps) => {    
-   console.log('task');
    
-   return <li >
+   return <li>
     <Checkbox size={'small'} checked={isChecked} onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeStatus(e.currentTarget.checked, id)} />
     <EditableSpan Oldtitle={oldtitle} callback={(newTitle) => updateTaskTitle(newTitle, id)} className={taskClassName}/>
 
